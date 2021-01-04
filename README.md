@@ -1,2 +1,3 @@
 # movie_api-client
-Build View as per MVC architecture using React
+This is the front-end for the movie_api.
+
