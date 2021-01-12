@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 export class MovieView extends React.Component {
 	constructor() {
@@ -8,10 +8,13 @@ export class MovieView extends React.Component {
 
 		this.state = {};
 	}
+	refreshPage() {
+		window.location.reload(false);
+	}
 
 	render() {
 		const { movie } = this.props;
-		let history = useHistory();
+		// let history = useHistory();
 
 		if (!movie) return null;
 
@@ -35,7 +38,7 @@ export class MovieView extends React.Component {
 					<span className="label">Director: </span>
 					<span className="value">{movie.Director.Name}</span>
 				</div>
-				<button onClick={() => history.goBack()}>Back</button>
+				<button onClick={this.refreshPage}>Back</button>
 			</div>
 		);
 	}
