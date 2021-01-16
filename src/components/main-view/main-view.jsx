@@ -7,6 +7,8 @@ import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { Col, Row } from 'react-bootstrap';
 
+import './main-view.scss';
+
 export class MainView extends React.Component {
 	constructor() {
 		super();

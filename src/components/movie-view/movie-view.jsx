@@ -1,4 +1,5 @@
 import React from 'react';
+import './movie-view.scss';
 
 // import { useHistory } from 'react-router-dom';
 
