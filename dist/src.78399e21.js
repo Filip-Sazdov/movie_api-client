@@ -51245,12 +51245,10 @@ function RegistrationView() {
     variant: "primary",
     type: "submit",
     onClick: handleSubmit
-  }, "Submit"), _react.default.createElement(_reactRouterDom.Link, {
-    to: "/"
-  }, _react.default.createElement(_Button.default, {
+  }, "Submit"), _react.default.createElement(_Button.default, {
     variant: "link",
     type: "submit"
-  }, "Cancel")));
+  }, "Cancel"));
 }
 },{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","./registration-view.scss":"components/registration-view/registration-view.scss","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/main-view/main-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
@@ -51319,7 +51317,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       movies: null,
       selectedMovie: null,
-      user: null
+      user: null,
+      register: null
     };
     return _this;
   }
@@ -51353,6 +51352,20 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "onRegistration",
+    value: function onRegistration() {
+      this.setState({
+        register: true
+      });
+    }
+  }, {
+    key: "onRegistrationCancel",
+    value: function onRegistrationCancel() {
+      this.setState({
+        register: false
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -51361,11 +51374,18 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           movies = _this$state.movies,
           selectedMovie = _this$state.selectedMovie,
           user = _this$state.user,
-          email = _this$state.email;
-      if (!email) return _react.default.createElement(_registrationView.RegistrationView, null);
+          register = _this$state.register;
+      if (register) return _react.default.createElement(_registrationView.RegistrationView, {
+        onRegistrationCancel: function onRegistrationCancel() {
+          return _this3.onRegistrationCancel();
+        }
+      });
       if (!user) return _react.default.createElement(_loginView.LoginView, {
         onLoggedIn: function onLoggedIn(user) {
           return _this3.onLoggedIn(user);
+        },
+        onRegistrationClick: function onRegistrationClick() {
+          return _this3.onRegistration();
         }
       }); // Before the movies have been loaded
 

@@ -73,11 +73,11 @@ export function RegistrationView() {
 			<Button variant="primary" type="submit" onClick={handleSubmit}>
 				Submit
 			</Button>
-			<Link to={`/`}>
-				<Button variant="link" type="submit">
-					Cancel
-				</Button>
-			</Link>
+			{/* <Link to={`/`}> */}
+			<Button variant="link" type="submit">
+				Cancel
+			</Button>
+			{/* </Link> */}
 		</Form>
 	);
 }

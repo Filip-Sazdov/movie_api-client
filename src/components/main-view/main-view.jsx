@@ -17,6 +17,7 @@ export class MainView extends React.Component {
 			movies: null,
 			selectedMovie: null,
 			user: null,
+			register: null,
 		};
 	}
 	componentDidMount() {
@@ -42,13 +43,22 @@ export class MainView extends React.Component {
 			user,
 		});
 	}
+	onRegistration() {
+		this.setState({ register: true });
+	}
+
+	onRegistrationCancel() {
+		this.setState({ register: false });
+	}
 
 	render() {
-		const { movies, selectedMovie, user, email } = this.state;
+		const { movies, selectedMovie, user, register } = this.state;
 
-		if (!email) return <RegistrationView />;
-
-		if (!user) return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
+		if (register) return <RegistrationView onRegistrationCancel={() => this.onRegistrationCancel()} />;
+		if (!user)
+			return (
+				<LoginView onLoggedIn={(user) => this.onLoggedIn(user)} onRegistrationClick={() => this.onRegistration()} />
+			);
 
 		// Before the movies have been loaded
 		if (!movies) return <div className="main-view" />;
