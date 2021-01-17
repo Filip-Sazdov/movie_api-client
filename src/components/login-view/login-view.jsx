@@ -38,9 +38,14 @@ export function LoginView(props) {
 					onChange={(e) => setPassword(e.target.value)}
 				/>
 			</Form.Group>
-			<Button variant="primary" type="button" onClick={handleSubmit}>
-				Submit
-			</Button>
+			<Form.Group>
+				<Button size="lg" block variant="primary" type="button" onClick={handleSubmit}>
+					Submit
+				</Button>
+				<Button size="lg" block variant="primary" type="button" onClick={props.onRegistrationClick}>
+					Register
+				</Button>
+			</Form.Group>
 		</Form>
 	);
 }

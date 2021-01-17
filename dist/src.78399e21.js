@@ -48057,11 +48057,19 @@ function LoginView(props) {
     onChange: function onChange(e) {
       return setPassword(e.target.value);
     }
-  })), _react.default.createElement(_Button.default, {
+  })), _react.default.createElement(_Form.default.Group, null, _react.default.createElement(_Button.default, {
+    size: "lg",
+    block: true,
     variant: "primary",
     type: "button",
     onClick: handleSubmit
-  }, "Submit"));
+  }, "Submit"), _react.default.createElement(_Button.default, {
+    size: "lg",
+    block: true,
+    variant: "primary",
+    type: "button",
+    onClick: props.onRegistrationClick
+  }, "Register")));
 }
 },{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","./login-view.scss":"components/login-view/login-view.scss"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
@@ -51518,7 +51526,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50137" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63909" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
