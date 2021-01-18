@@ -3,6 +3,11 @@ import axios from 'axios';
 
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+import { LoginView } from '../login-view/login-view';
+import { RegistrationView } from '../registration-view/registration-view';
+import { Col, Row } from 'react-bootstrap';
+
+import './main-view.scss';
 
 export class MainView extends React.Component {
 	constructor() {
@@ -11,6 +16,8 @@ export class MainView extends React.Component {
 		this.state = {
 			movies: null,
 			selectedMovie: null,
+			user: null,
+			register: null,
 		};
 	}
 	componentDidMount() {
@@ -31,23 +38,45 @@ export class MainView extends React.Component {
 			selectedMovie: movie,
 		});
 	}
+	onLoggedIn(user) {
+		this.setState({
+			user,
+		});
+	}
+	onRegistration() {
+		this.setState({ register: true });
+	}
+
+	onRegistrationCancel() {
+		this.setState({ register: false });
+	}
 
 	render() {
-		const { movies, selectedMovie } = this.state;
+		const { movies, selectedMovie, user, register } = this.state;
+
+		if (register) return <RegistrationView onRegistrationCancel={() => this.onRegistrationCancel()} />;
+		if (!user)
+			return (
+				<LoginView onLoggedIn={(user) => this.onLoggedIn(user)} onRegistrationClick={() => this.onRegistration()} />
+			);
 
 		// Before the movies have been loaded
 		if (!movies) return <div className="main-view" />;
 
 		return (
-			<div className="main-view">
+			<Row className="main-view justify-content-md-center">
 				{selectedMovie ? (
-					<MovieView movie={selectedMovie} />
+					<Col md={8} style={{ border: '1px solid black' }}>
+						<MovieView movie={selectedMovie} onBackClick={(movie) => this.onMovieClick(null)} />
+					</Col>
 				) : (
 					movies.map((movie) => (
-						<MovieCard key={movie._id} movie={movie} onClick={(movie) => this.onMovieClick(movie)} />
+						<Col md={3}>
+							<MovieCard key={movie._id} movie={movie} onClick={(movie) => this.onMovieClick(movie)} />
+						</Col>
 					))
 				)}
-			</div>
+			</Row>
 		);
 	}
 }
