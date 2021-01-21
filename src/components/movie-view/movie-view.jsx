@@ -1,5 +1,7 @@
 import React from 'react';
 import './movie-view.scss';
+import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 
 // import { useHistory } from 'react-router-dom';
 
@@ -8,9 +10,6 @@ export class MovieView extends React.Component {
 		super();
 
 		this.state = {};
-	}
-	refreshPage() {
-		window.location.reload(false);
 	}
 
 	render() {
@@ -39,7 +38,17 @@ export class MovieView extends React.Component {
 					<span className="label">Director: </span>
 					<span className="value">{movie.Director.Name}</span>
 				</div>
-				<button onClick={this.refreshPage}>Back</button>
+
+				<Link to={`/directors/${movie.Director.Name}`}>
+					<Button variant="link">Director</Button>
+				</Link>
+
+				<Link to={`/genres/${movie.Genre.Name}`}>
+					<Button variant="link">Genre</Button>
+				</Link>
+				<Link to={`/`}>
+					<Button variant="link">Return</Button>
+				</Link>
 			</div>
 		);
 	}
