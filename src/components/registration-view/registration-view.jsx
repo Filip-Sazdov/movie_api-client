@@ -14,7 +14,7 @@ export function RegistrationView() {
 	const [email, setEmail] = useState('');
 	const [dob, setDob] = useState('');
 
-	const handleSubmit = (e) => {
+	const handleRegister = (e) => {
 		e.preventDefault();
 
 		const createdUser = {
@@ -70,7 +70,7 @@ export function RegistrationView() {
 				<Form.Control type="date" value={dob} placeholder="12/31/1986" onChange={(e) => setDob(e.target.value)} />
 			</Form.Group>
 
-			<Button variant="primary" type="submit" onClick={handleSubmit}>
+			<Button variant="primary" type="submit" onClick={handleRegister}>
 				Submit
 			</Button>
 			{/* <Link to={`/`}> */}
