@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './registration-view.scss';
-
-import { Link } from 'react-router-dom';
 
 export function RegistrationView() {
 	const [username, setUsername] = useState('');
@@ -30,7 +29,7 @@ export function RegistrationView() {
 				console.log(response);
 				console.log(response.data);
 				alert('User created successfully');
-				window.open('/client', '_self');
+				window.open('/', '_self');
 			})
 			.catch((e) => {
 				console.log(e.response);
@@ -73,11 +72,11 @@ export function RegistrationView() {
 			<Button variant="primary" type="submit" onClick={handleRegister}>
 				Submit
 			</Button>
-			{/* <Link to={`/`}> */}
-			<Button variant="link" type="submit">
-				Cancel
-			</Button>
-			{/* </Link> */}
+			<Link to={`/`}>
+				<Button variant="link" type="submit">
+					Cancel
+				</Button>
+			</Link>
 		</Form>
 	);
 }
