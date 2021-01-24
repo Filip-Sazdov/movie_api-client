@@ -10,6 +10,8 @@ import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
+import { ProfileView } from '../profile-view/profile-view';
+import { UpdateProfile } from '../update-profile/update-profile';
 
 import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -96,7 +98,7 @@ export class MainView extends React.Component {
 			<Router>
 				<Navbar sticky="top" expand="lg" className="mb-2 navbar-styles">
 					<Navbar.Brand className="navbar-brand">
-						<Link to={`/`}>Victorville Film Archives</Link>
+						<Link to={`/`}>Movies API</Link>
 					</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" className="bg-light" />
 					<Navbar.Collapse className="justify-content-end navbar-light" id="basic-navbar-nav">
@@ -116,7 +118,7 @@ export class MainView extends React.Component {
 										Log out
 									</Button>
 								</Link>
-								<Link to={`/users/`}>
+								<Link to={`/users/${user}`}>
 									<Button variant="link">Account</Button>
 								</Link>
 								<Link to={`/`}>
@@ -166,6 +168,15 @@ export class MainView extends React.Component {
 					/>
 				</div>
 				<Route path="/about" render={() => <About />} />
+				<Route path="/users/:userId" render={() => <ProfileView movies={movies} />} />
+
+				<Route
+					path="/update/:userId"
+					render={() => {
+						return <UpdateProfile />;
+					}}
+				/>
+
 				{/* <Button size="lg" variant="primary" type="button" onClick={this.onLogOut}>
 					Log Out
 				</Button> */}
