@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -23,6 +24,7 @@ export function LoginView(props) {
 				props.onLoggedIn(data);
 			})
 			.catch((e) => {
+				alert('no such user');
 				console.log('no such user');
 			});
 	};
@@ -53,9 +55,12 @@ export function LoginView(props) {
 				<Button size="lg" block variant="primary" type="button" onClick={handleSubmit}>
 					Submit
 				</Button>
-				<Button size="lg" block variant="primary" type="button" onClick={props.onRegistrationClick}>
-					Register
-				</Button>
+
+				<Link to={`/register`}>
+					<Button size="lg" block variant="primary" type="button">
+						Register
+					</Button>
+				</Link>
 			</Form.Group>
 		</Form>
 	);
