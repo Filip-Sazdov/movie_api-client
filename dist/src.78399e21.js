@@ -52376,7 +52376,6 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         path: "/directors/:name",
         render: function render(_ref2) {
           var match = _ref2.match;
-          // if (!movies) return <div className="main-view" />;
           return _react.default.createElement(_directorView.DirectorView, {
             director: movies.find(function (m) {
               return m.Director.Name === match.params.name;
@@ -52519,7 +52518,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49893" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61707" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
