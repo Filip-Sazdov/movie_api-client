@@ -51019,6 +51019,8 @@ var _reactRouterDom = require("react-router-dom");
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -51060,8 +51062,28 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(MovieView, [{
+    key: "addFavorite",
+    value: function addFavorite(movie) {
+      var token = localStorage.getItem('token');
+      var user = localStorage.getItem('user');
+      var url = 'https://movie-api-on-heroku.herokuapp.com/users/' + user + '/Movies/' + movie._id;
+
+      _axios.default.post(url, '', {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).then(function (response) {
+        console.log(response); // window.open("/", "_self");
+
+        window.open('/users/' + user, '_self');
+        alert('Added to favorites!');
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var movie = this.props.movie; // let history = useHistory();
 
       if (!movie) return null;
@@ -51106,7 +51128,13 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         variant: "link"
-      }, "Return")));
+      }, "Return")), _react.default.createElement(_Button.default, {
+        variant: "primary",
+        size: "sm",
+        onClick: function onClick() {
+          return _this2.addFavorite(movie);
+        }
+      }, "Add to Favorites"));
     }
   }]);
 
@@ -51114,7 +51142,7 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
 }(_react.default.Component);
 
 exports.MovieView = MovieView;
-},{"react":"../node_modules/react/index.js","./movie-view.scss":"components/movie-view/movie-view.scss","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js"}],"components/login-view/login-view.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./movie-view.scss":"components/movie-view/movie-view.scss","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","axios":"../node_modules/axios/index.js"}],"components/login-view/login-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -51444,31 +51472,59 @@ var DirectorView = /*#__PURE__*/function (_React$Component) {
         className: "label"
       }, "Name: "), _react.default.createElement("span", {
         className: "value"
-      }, director.Name)), _react.default.createElement("div", {
+      }, director.Director.Name)), _react.default.createElement("div", {
         className: "director-bio"
       }, _react.default.createElement("span", {
         className: "label"
       }, "Bio: "), _react.default.createElement("span", {
         className: "value"
-      }, director.Bio)), _react.default.createElement("div", {
+      }, director.Director.Bio)), _react.default.createElement("div", {
         className: "director-birth"
       }, _react.default.createElement("span", {
         className: "label"
       }, "Born: "), _react.default.createElement("span", {
         className: "value"
-      }, director.Birth)), _react.default.createElement("div", {
+      }, director.Director.Birth)), _react.default.createElement("div", {
         className: "director-death"
       }, _react.default.createElement("span", {
         className: "label"
       }, "Died: "), _react.default.createElement("span", {
         className: "value"
-      }, director.Death)), _react.default.createElement(_reactRouterDom.Link, {
+      }, director.Director.Death)), _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         variant: "link"
       }, "Return"))), _react.default.createElement(_Col.default, {
         className: "col-3"
-      })));
+      })), _react.default.createElement(_Container.default, null, _react.default.createElement("h4", {
+        className: "mt-4"
+      }, "Some ", director.Director.Name, " movies"), _react.default.createElement("div", {
+        className: "d-flex row mt-3 ml-1"
+      }, movies.map(function (movie) {
+        if (movie.Director.Name === director.Director.Name) {
+          return _react.default.createElement("div", {
+            key: movie._id
+          }, _react.default.createElement(_Card.default, {
+            className: "mb-3 mr-2 h-100",
+            style: {
+              width: '16rem'
+            }
+          }, _react.default.createElement(_Card.default.Img, {
+            variant: "top",
+            src: movie.ImagePath
+          }), _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_reactRouterDom.Link, {
+            className: "text-muted",
+            to: "/movies/".concat(movie._id)
+          }, _react.default.createElement(_Card.default.Title, null, movie.Title)), _react.default.createElement(_Card.default.Text, null, movie.Description.substring(0, 90), "...")), _react.default.createElement(_Card.default.Footer, {
+            className: "bg-white border-top-0"
+          }, _react.default.createElement(_reactRouterDom.Link, {
+            to: "/movies/".concat(movie._id)
+          }, _react.default.createElement(_Button.default, {
+            variant: "link",
+            className: "read-more-link pl-0"
+          }, "Read more")))));
+        }
+      }))));
     }
   }]);
 
@@ -51568,17 +51624,45 @@ var GenreView = /*#__PURE__*/function (_React$Component) {
         className: "genre-title "
       }, _react.default.createElement("span", {
         className: "value"
-      }, genre.Name)), _react.default.createElement("div", {
+      }, genre.Genre.Name)), _react.default.createElement("div", {
         className: "genre-description "
       }, _react.default.createElement("span", {
         className: "value"
-      }, genre.Description)), _react.default.createElement(_reactRouterDom.Link, {
+      }, genre.Genre.Description)), _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         variant: "link"
       }, "Return"))), _react.default.createElement(_Col.default, {
         className: "col-3"
-      })));
+      })), _react.default.createElement(_Container.default, null, _react.default.createElement("h4", {
+        className: "mt-4"
+      }, "Some ", genre.Genre.Name, " movies"), _react.default.createElement("div", {
+        className: "d-flex row mt-3 ml-2"
+      }, movies.map(function (movie) {
+        if (movie.Genre.Name === genre.Genre.Name) {
+          return _react.default.createElement("div", {
+            key: movie._id
+          }, _react.default.createElement(_Card.default, {
+            className: "mb-3 mr-2 h-100",
+            style: {
+              width: '16rem'
+            }
+          }, _react.default.createElement(_Card.default.Img, {
+            variant: "top",
+            src: movie.ImagePath
+          }), _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_reactRouterDom.Link, {
+            className: "text-muted",
+            to: "/movies/".concat(movie._id)
+          }, _react.default.createElement(_Card.default.Title, null, movie.Title)), _react.default.createElement(_Card.default.Text, null, movie.Description.substring(0, 90), "...")), _react.default.createElement(_Card.default.Footer, {
+            className: "bg-white border-top-0"
+          }, _react.default.createElement(_reactRouterDom.Link, {
+            to: "/movies/".concat(movie._id)
+          }, _react.default.createElement(_Button.default, {
+            variant: "link",
+            className: "read-more-link pl-0"
+          }, "Read more")))));
+        }
+      }))));
     }
   }]);
 
@@ -51714,23 +51798,26 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
           favoriteMovies: response.data.FavoriteMovies
         });
       });
-    } //   removeFavorite(movie) {
-    //     let token = localStorage.getItem("token");
-    //     let url =
-    //       "https://movie-api-on-heroku.herokuapp.com/users/" +
-    //       localStorage.getItem("user") +
-    //       "/favorites/" +
-    //       movie._id;
-    //     axios
-    //       .delete(url, {
-    //         headers: { Authorization: `Bearer ${token}` },
-    //       })
-    //       .then((response) => {
-    //         console.log(response);
-    //         this.componentDidMount();
-    //       });
-    //   }
+    }
+  }, {
+    key: "removeFavorite",
+    value: function removeFavorite(movie) {
+      var _this3 = this;
 
+      var token = localStorage.getItem('token');
+
+      var url = 'https://movie-api-on-heroku.herokuapp.com/users/' + localStorage.getItem('user') + '/Movies/' + movie._id;
+
+      _axios.default.delete(url, {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).then(function (response) {
+        console.log(response);
+
+        _this3.componentDidMount();
+      });
+    }
   }, {
     key: "handleDelete",
     value: function handleDelete() {
@@ -51753,14 +51840,12 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
-      var movies = this.props.movies; // this.getUser(localStorage.getItem("token"));
-      // const favoriteMovieList = movies.filter((movie) => {
-      //   return this.state.favoriteMovies.includes(movie._id);
-      // });
-      // console.log(favoriteMovieList);
-
+      var movies = this.props.movies;
+      var favoriteMovieList = movies.filter(function (movie) {
+        return _this4.state.favoriteMovies.includes(movie._id);
+      });
       if (!movies) alert('Please sign in');
       return _react.default.createElement("div", {
         className: "userProfile",
@@ -51801,9 +51886,29 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
         size: "sm",
         block: true,
         onClick: function onClick() {
-          return _this3.handleDelete();
+          return _this4.handleDelete();
         }
-      }, "Delete Account"))))));
+      }, "Delete Account"))), _react.default.createElement(_Col.default, null, _react.default.createElement("div", {
+        className: "favoriteMovies",
+        style: {
+          float: 'right',
+          textAlign: 'center',
+          width: '24rem'
+        }
+      }, _react.default.createElement("h1", null, "Favorite Movies"), favoriteMovieList.map(function (movie) {
+        return _react.default.createElement("div", {
+          key: movie._id
+        }, _react.default.createElement(_Card.default, null, _react.default.createElement(_Card.default.Img, {
+          variant: "top",
+          src: movie.ImagePath
+        }), _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_reactRouterDom.Link, {
+          to: "/movies/".concat(movie._id)
+        }, _react.default.createElement(_Card.default.Title, null, movie.Title)))), _react.default.createElement(_Button.default, {
+          onClick: function onClick() {
+            return _this4.removeFavorite(movie);
+          }
+        }, "Remove"));
+      }))))));
     }
   }]);
 
@@ -52271,13 +52376,12 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         path: "/directors/:name",
         render: function render(_ref2) {
           var match = _ref2.match;
-          if (!movies) return _react.default.createElement("div", {
-            className: "main-view"
-          });
+          // if (!movies) return <div className="main-view" />;
           return _react.default.createElement(_directorView.DirectorView, {
             director: movies.find(function (m) {
               return m.Director.Name === match.params.name;
-            }).Director
+            }),
+            movies: movies
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -52290,7 +52394,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           return _react.default.createElement(_genreView.GenreView, {
             genre: movies.find(function (m) {
               return m.Genre.Name === match.params.name;
-            }).Genre
+            }),
+            movies: movies
           });
         }
       })), _react.default.createElement(_reactRouterDom.Route, {
