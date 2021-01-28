@@ -2,6 +2,7 @@ import React from 'react';
 import './movie-view.scss';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 // import { useHistory } from 'react-router-dom';
 
@@ -10,6 +11,23 @@ export class MovieView extends React.Component {
 		super();
 
 		this.state = {};
+	}
+
+	addFavorite(movie) {
+		let token = localStorage.getItem('token');
+		let user = localStorage.getItem('user');
+		let url = 'https://movie-api-on-heroku.herokuapp.com/users/' + user + '/Movies/' + movie._id;
+
+		axios
+			.post(url, '', {
+				headers: { Authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				console.log(response);
+				// window.open("/", "_self");
+				window.open('/users/' + user, '_self');
+				alert('Added to favorites!');
+			});
 	}
 
 	render() {
@@ -49,6 +67,9 @@ export class MovieView extends React.Component {
 				<Link to={`/`}>
 					<Button variant="link">Return</Button>
 				</Link>
+				<Button variant="primary" size="sm" onClick={() => this.addFavorite(movie)}>
+					Add to Favorites
+				</Button>
 			</div>
 		);
 	}
