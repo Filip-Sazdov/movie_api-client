@@ -55,22 +55,19 @@ export class ProfileView extends React.Component {
 			});
 	}
 
-	//   removeFavorite(movie) {
-	//     let token = localStorage.getItem("token");
-	//     let url =
-	//       "https://movie-api-on-heroku.herokuapp.com/users/" +
-	//       localStorage.getItem("user") +
-	//       "/favorites/" +
-	//       movie._id;
-	//     axios
-	//       .delete(url, {
-	//         headers: { Authorization: `Bearer ${token}` },
-	//       })
-	//       .then((response) => {
-	//         console.log(response);
-	//         this.componentDidMount();
-	//       });
-	//   }
+	removeFavorite(movie) {
+		let token = localStorage.getItem('token');
+		let url =
+			'https://movie-api-on-heroku.herokuapp.com/users/' + localStorage.getItem('user') + '/Movies/' + movie._id;
+		axios
+			.delete(url, {
+				headers: { Authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				console.log(response);
+				this.componentDidMount();
+			});
+	}
 
 	handleDelete() {
 		let token = localStorage.getItem('token');
@@ -92,11 +89,9 @@ export class ProfileView extends React.Component {
 
 	render() {
 		const { movies } = this.props;
-		// this.getUser(localStorage.getItem("token"));
-		// const favoriteMovieList = movies.filter((movie) => {
-		//   return this.state.favoriteMovies.includes(movie._id);
-		// });
-		// console.log(favoriteMovieList);
+		const favoriteMovieList = movies.filter((movie) => {
+			return this.state.favoriteMovies.includes(movie._id);
+		});
 
 		if (!movies) alert('Please sign in');
 		return (
@@ -133,34 +128,33 @@ export class ProfileView extends React.Component {
 								</Button>
 							</Form>
 						</Col>
-						{/* <Col>
-              <div
-                className="favoriteMovies"
-                style={{
-                  float: "right",
-                  textAlign: "center",
-                  width: "24rem",
-                }}
-              >
-                <h1>Favorite Movies</h1>
-                {favoriteMovieList.map((movie) => {
-                  return (
-                    <div key={movie._id}>
-                      <Card>
-                        <Card.Body>
-                          <Link to={`/movies/${movie._id}`}>
-                            <Card.Title>{movie.Title}</Card.Title>
-                          </Link>
-                        </Card.Body>
-                      </Card>
-                      <Button onClick={() => this.removeFavorite(movie)}>
-                        Remove
-                      </Button>
-                    </div>
-                  );
-                })}
-              </div>
-            </Col> */}
+						<Col>
+							<div
+								className="favoriteMovies"
+								style={{
+									float: 'right',
+									textAlign: 'center',
+									width: '24rem',
+								}}
+							>
+								<h1>Favorite Movies</h1>
+								{favoriteMovieList.map((movie) => {
+									return (
+										<div key={movie._id}>
+											<Card>
+												<Card.Img variant="top" src={movie.ImagePath} />
+												<Card.Body>
+													<Link to={`/movies/${movie._id}`}>
+														<Card.Title>{movie.Title}</Card.Title>
+													</Link>
+												</Card.Body>
+											</Card>
+											<Button onClick={() => this.removeFavorite(movie)}>Remove</Button>
+										</div>
+									);
+								})}
+							</div>
+						</Col>
 					</Row>
 				</Container>
 			</div>
