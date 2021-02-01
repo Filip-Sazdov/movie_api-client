@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './registration-view.scss';
-
-import { Link } from 'react-router-dom';
 
 export function RegistrationView() {
 	const [username, setUsername] = useState('');
@@ -14,7 +13,7 @@ export function RegistrationView() {
 	const [email, setEmail] = useState('');
 	const [dob, setDob] = useState('');
 
-	const handleSubmit = (e) => {
+	const handleRegister = (e) => {
 		e.preventDefault();
 
 		const createdUser = {
@@ -30,7 +29,7 @@ export function RegistrationView() {
 				console.log(response);
 				console.log(response.data);
 				alert('User created successfully');
-				window.open('/client', '_self');
+				window.open('/', '_self');
 			})
 			.catch((e) => {
 				console.log(e.response);
@@ -70,14 +69,14 @@ export function RegistrationView() {
 				<Form.Control type="date" value={dob} placeholder="12/31/1986" onChange={(e) => setDob(e.target.value)} />
 			</Form.Group>
 
-			<Button variant="primary" type="submit" onClick={handleSubmit}>
+			<Button variant="primary" type="submit" onClick={handleRegister}>
 				Submit
 			</Button>
-			{/* <Link to={`/`}> */}
-			<Button variant="link" type="submit">
-				Cancel
-			</Button>
-			{/* </Link> */}
+			<Link to={`/`}>
+				<Button variant="link" type="submit">
+					Cancel
+				</Button>
+			</Link>
 		</Form>
 	);
 }
