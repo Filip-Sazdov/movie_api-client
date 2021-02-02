@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { setUser, setToken, setFavoriteMovies } from '../../actions/actions';
+
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+
 import './profile-view.scss';
 
 import Container from 'react-bootstrap/Container';
@@ -37,14 +42,12 @@ export class ProfileView extends React.Component {
 	}
 
 	getUser(token) {
-		//console.log(localStorage.getItem("user"));
 		let url = 'https://movie-api-on-heroku.herokuapp.com/users/' + localStorage.getItem('user');
 		axios
 			.get(url, {
 				headers: { Authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
-				//console.log(response);
 				this.setState({
 					username: response.data.Username,
 					password: response.data.Password,
@@ -88,9 +91,9 @@ export class ProfileView extends React.Component {
 	}
 
 	render() {
-		const { movies } = this.props;
+		const { movies, user, favoriteMovies } = this.props;
 		const favoriteMovieList = movies.filter((movie) => {
-			return this.state.favoriteMovies.includes(movie._id);
+			return favoriteMovies.includes(movie._id);
 		});
 
 		if (!movies) alert('Please sign in');
@@ -103,7 +106,7 @@ export class ProfileView extends React.Component {
 								<h1 style={{ textAlign: 'center' }}>Profile Details</h1>
 								<Form.Group controlId="formBasicUsername">
 									<h3>Username: </h3>
-									<Form.Label>{this.state.username}</Form.Label>
+									<Form.Label>{this.props.user}</Form.Label>
 								</Form.Group>
 								<Form.Group controlId="formBasicEmail">
 									<h3>Email:</h3>
@@ -113,7 +116,7 @@ export class ProfileView extends React.Component {
 									<h3>Date of Birth:</h3>
 									<Form.Label>{this.state.dob}</Form.Label>
 								</Form.Group>
-								<Link to={`/update/${this.state.username}`}>
+								<Link to={`/update/${this.props.user}`}>
 									<Button variant="outline-dark" type="link" size="sm" block>
 										Edit Profile
 									</Button>
@@ -165,3 +168,12 @@ export class ProfileView extends React.Component {
 ProfileView.propTypes = {
 	movies: PropTypes.array.isRequired,
 };
+
+let mapStateToProps = (state) => {
+	return {
+		user: state.user,
+		token: state.token,
+		favoriteMovies: state.favoriteMovies,
+	};
+};
+export default connect(mapStateToProps, { setUser, setToken, setFavoriteMovies })(ProfileView);
