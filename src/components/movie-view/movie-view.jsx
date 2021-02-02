@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
-// import { useHistory } from 'react-router-dom';
-
 export class MovieView extends React.Component {
 	constructor() {
 		super();
