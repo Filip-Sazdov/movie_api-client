@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { About } from '../shared-components/about/about';
 
-import { setMovies } from '../../actions/actions';
+import { setMovies, setUser, setToken, setFavoriteMovies } from '../../actions/actions';
 
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
@@ -28,7 +28,7 @@ export class MainView extends React.Component {
 		super();
 
 		this.state = {
-			// movies: [],
+			movies: [],
 			// selectedMovie: null,
 			user: null,
 			// register: null,
@@ -55,9 +55,10 @@ export class MainView extends React.Component {
 	componentDidMount() {
 		let accessToken = localStorage.getItem('token');
 		if (accessToken !== null) {
-			this.setState({
-				user: localStorage.getItem('user'),
-			});
+			this.props.setUser(localStorage.getItem('user'));
+			// this.setState({
+			// 	user: localStorage.getItem('user'),
+			// });
 			this.getMovies(accessToken);
 		}
 	}
@@ -68,9 +69,10 @@ export class MainView extends React.Component {
 		});
 	}
 	onLoggedIn(authData) {
-		this.setState({
-			user: authData.user.Username,
-		});
+		// this.setState({
+		// 	user: authData.user.Username,
+		// });
+		this.props.setUser(authData.user.Username);
 
 		localStorage.setItem('token', authData.token);
 		localStorage.setItem('user', authData.user.Username);
@@ -170,12 +172,15 @@ export class MainView extends React.Component {
 					/>
 				</div>
 				<Route path="/about" render={() => <About />} />
-				<Route path="/users/:userId" render={() => <ProfileView movies={movies} />} />
+				<Route
+					path="/users/:userId"
+					render={() => <ProfileView movies={movies} user={user} favoriteMovies={this.props.favoriteMovies} />}
+				/>
 
 				<Route
 					path="/update/:userId"
 					render={() => {
-						return <UpdateProfile />;
+						return <UpdateProfile user={user} token={this.props.token} />;
 					}}
 				/>
 			</Router>
@@ -184,7 +189,12 @@ export class MainView extends React.Component {
 }
 
 let mapStateToProps = (state) => {
-	return { movies: state.movies };
+	return {
+		movies: state.movies,
+		user: state.user,
+		token: state.token,
+		favoriteMovies: state.favoriteMovies,
+	};
 };
 
-export default connect(mapStateToProps, { setMovies })(MainView);
+export default connect(mapStateToProps, { setMovies, setUser, setToken, setFavoriteMovies })(MainView);

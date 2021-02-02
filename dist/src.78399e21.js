@@ -53237,13 +53237,19 @@ Object.defineProperty(exports, "__esModule", {
 exports.setMovies = setMovies;
 exports.setFilter = setFilter;
 exports.setUser = setUser;
-exports.SET_USER = exports.SET_FILTER = exports.SET_MOVIES = void 0;
+exports.setToken = setToken;
+exports.setFavoriteMovies = setFavoriteMovies;
+exports.SET_FAVORITEMOVIES = exports.SET_TOKEN = exports.SET_USER = exports.SET_FILTER = exports.SET_MOVIES = void 0;
 var SET_MOVIES = 'SET_MOVIES';
 exports.SET_MOVIES = SET_MOVIES;
 var SET_FILTER = 'SET_FILTER';
 exports.SET_FILTER = SET_FILTER;
 var SET_USER = 'SET_USER';
 exports.SET_USER = SET_USER;
+var SET_TOKEN = 'SET_TOKEN';
+exports.SET_TOKEN = SET_TOKEN;
+var SET_FAVORITEMOVIES = 'SET_FAVORITEMOVIES';
+exports.SET_FAVORITEMOVIES = SET_FAVORITEMOVIES;
 
 function setMovies(value) {
   return {
@@ -53262,6 +53268,20 @@ function setFilter(value) {
 function setUser(value) {
   return {
     type: SET_USER,
+    value: value
+  };
+}
+
+function setToken(value) {
+  return {
+    type: SET_TOKEN,
+    value: value
+  };
+}
+
+function setFavoriteMovies(value) {
+  return {
+    type: SET_FAVORITEMOVIES,
     value: value
   };
 }
@@ -53468,7 +53488,6 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-// import { useHistory } from 'react-router-dom';
 var MovieView = /*#__PURE__*/function (_React$Component) {
   _inherits(MovieView, _React$Component);
 
@@ -54113,11 +54132,15 @@ module.hot.accept(reloadCSS);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ProfileView = void 0;
+exports.default = exports.ProfileView = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _reactRedux = require("react-redux");
+
+var _actions = require("../../actions/actions");
 
 var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
 
@@ -54204,7 +54227,6 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
     value: function getUser(token) {
       var _this2 = this;
 
-      //console.log(localStorage.getItem("user"));
       var url = 'https://movie-api-on-heroku.herokuapp.com/users/' + localStorage.getItem('user');
 
       _axios.default.get(url, {
@@ -54212,7 +54234,6 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
           Authorization: "Bearer ".concat(token)
         }
       }).then(function (response) {
-        //console.log(response);
         _this2.setState({
           username: response.data.Username,
           password: response.data.Password,
@@ -54265,9 +54286,12 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this4 = this;
 
-      var movies = this.props.movies;
+      var _this$props = this.props,
+          movies = _this$props.movies,
+          user = _this$props.user,
+          favoriteMovies = _this$props.favoriteMovies;
       var favoriteMovieList = movies.filter(function (movie) {
-        return _this4.state.favoriteMovies.includes(movie._id);
+        return favoriteMovies.includes(movie._id);
       });
       if (!movies) alert('Please sign in');
       return _react.default.createElement("div", {
@@ -54286,12 +54310,12 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
         }
       }, "Profile Details"), _react.default.createElement(_Form.default.Group, {
         controlId: "formBasicUsername"
-      }, _react.default.createElement("h3", null, "Username: "), _react.default.createElement(_Form.default.Label, null, this.state.username)), _react.default.createElement(_Form.default.Group, {
+      }, _react.default.createElement("h3", null, "Username: "), _react.default.createElement(_Form.default.Label, null, this.props.user)), _react.default.createElement(_Form.default.Group, {
         controlId: "formBasicEmail"
       }, _react.default.createElement("h3", null, "Email:"), _react.default.createElement(_Form.default.Label, null, this.state.email)), _react.default.createElement(_Form.default.Group, {
         controlId: "formBasicDate"
       }, _react.default.createElement("h3", null, "Date of Birth:"), _react.default.createElement(_Form.default.Label, null, this.state.dob)), _react.default.createElement(_reactRouterDom.Link, {
-        to: "/update/".concat(this.state.username)
+        to: "/update/".concat(this.props.user)
       }, _react.default.createElement(_Button.default, {
         variant: "outline-dark",
         type: "link",
@@ -54342,7 +54366,23 @@ exports.ProfileView = ProfileView;
 ProfileView.propTypes = {
   movies: _propTypes.default.array.isRequired
 };
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","./profile-view.scss":"components/profile-view/profile-view.scss","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","axios":"../node_modules/axios/index.js"}],"components/update-profile/update-profile.jsx":[function(require,module,exports) {
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    user: state.user,
+    token: state.token,
+    favoriteMovies: state.favoriteMovies
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps, {
+  setUser: _actions.setUser,
+  setToken: _actions.setToken,
+  setFavoriteMovies: _actions.setFavoriteMovies
+})(ProfileView);
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-redux":"../node_modules/react-redux/es/index.js","../../actions/actions":"actions/actions.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","./profile-view.scss":"components/profile-view/profile-view.scss","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","axios":"../node_modules/axios/index.js"}],"components/update-profile/update-profile.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -54567,7 +54607,7 @@ function VisibilityFilterInput(props) {
       return props.setFilter(e.target.value);
     },
     value: props.visibilityFilter,
-    placeholder: "filter"
+    placeholder: "Search Movie Titles"
   });
 }
 
@@ -54594,13 +54634,6 @@ var _visibilityFilterInput = _interopRequireDefault(require("../visibility-filte
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var mapStateToProps = function mapStateToProps(state) {
-  var visibilityFilter = state.visibilityFilter;
-  return {
-    visibilityFilter: visibilityFilter
-  };
-};
-
 function MoviesList(props) {
   var movies = props.movies,
       visibilityFilter = props.visibilityFilter;
@@ -54626,6 +54659,13 @@ function MoviesList(props) {
     });
   }));
 }
+
+var mapStateToProps = function mapStateToProps(state) {
+  var visibilityFilter = state.visibilityFilter;
+  return {
+    visibilityFilter: visibilityFilter
+  };
+};
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(MoviesList);
 
@@ -54717,7 +54757,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this);
     _this.state = {
-      // movies: [],
+      movies: [],
       // selectedMovie: null,
       user: null // register: null,
 
@@ -54750,9 +54790,10 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       var accessToken = localStorage.getItem('token');
 
       if (accessToken !== null) {
-        this.setState({
-          user: localStorage.getItem('user')
-        });
+        this.props.setUser(localStorage.getItem('user')); // this.setState({
+        // 	user: localStorage.getItem('user'),
+        // });
+
         this.getMovies(accessToken);
       }
     }
@@ -54766,9 +54807,10 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onLoggedIn",
     value: function onLoggedIn(authData) {
-      this.setState({
-        user: authData.user.Username
-      });
+      // this.setState({
+      // 	user: authData.user.Username,
+      // });
+      this.props.setUser(authData.user.Username);
       localStorage.setItem('token', authData.token);
       localStorage.setItem('user', authData.user.Username);
       this.getMovies(authData.token);
@@ -54919,13 +54961,18 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         path: "/users/:userId",
         render: function render() {
           return _react.default.createElement(_profileView.ProfileView, {
-            movies: movies
+            movies: movies,
+            user: user,
+            favoriteMovies: _this3.props.favoriteMovies
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
         path: "/update/:userId",
         render: function render() {
-          return _react.default.createElement(_updateProfile.UpdateProfile, null);
+          return _react.default.createElement(_updateProfile.UpdateProfile, {
+            user: user,
+            token: _this3.props.token
+          });
         }
       }));
     }
@@ -54938,12 +54985,18 @@ exports.MainView = MainView;
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    movies: state.movies
+    movies: state.movies,
+    user: state.user,
+    token: state.token,
+    favoriteMovies: state.favoriteMovies
   };
 };
 
 var _default = (0, _reactRedux.connect)(mapStateToProps, {
-  setMovies: _actions.setMovies
+  setMovies: _actions.setMovies,
+  setUser: _actions.setUser,
+  setToken: _actions.setToken,
+  setFavoriteMovies: _actions.setFavoriteMovies
 })(MainView);
 
 exports.default = _default;
@@ -54996,6 +55049,32 @@ function user() {
     default:
       return state;
   }
+}
+
+function token() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions.SET_TOKEN:
+      return action.value;
+
+    default:
+      return state;
+  }
+}
+
+function favoriteMovies() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions.SET_FAVORITEMOVIES:
+      return action.value;
+
+    default:
+      return state;
+  }
 } // function moviesApp(state = {}, action) {
 // 	return {
 // 		visibilityFilter: visibilityFilter(state.visibilityFilter, action),
@@ -55007,7 +55086,9 @@ function user() {
 var moviesApp = (0, _redux.combineReducers)({
   visibilityFilter: visibilityFilter,
   movies: movies,
-  user: user
+  user: user,
+  token: token,
+  favoriteMovies: favoriteMovies
 });
 var _default = moviesApp;
 exports.default = _default;
