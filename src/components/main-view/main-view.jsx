@@ -1,8 +1,11 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { About } from '../shared-components/about/about';
+
+import { setMovies } from '../../actions/actions';
 
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
@@ -12,6 +15,7 @@ import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
 import { UpdateProfile } from '../update-profile/update-profile';
+import MoviesList from '../movies-list/movies-list';
 
 import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -24,10 +28,10 @@ export class MainView extends React.Component {
 		super();
 
 		this.state = {
-			movies: [],
-			selectedMovie: null,
+			// movies: [],
+			// selectedMovie: null,
 			user: null,
-			register: null,
+			// register: null,
 		};
 	}
 
@@ -38,9 +42,10 @@ export class MainView extends React.Component {
 			})
 			.then((response) => {
 				// Assign the result to the state
-				this.setState({
-					movies: response.data,
-				});
+				// this.setState({
+				// 	movies: response.data,
+				// });
+				this.props.setMovies(response.data);
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -63,7 +68,6 @@ export class MainView extends React.Component {
 		});
 	}
 	onLoggedIn(authData) {
-		console.log(authData);
 		this.setState({
 			user: authData.user.Username,
 		});
@@ -87,7 +91,10 @@ export class MainView extends React.Component {
 	}
 
 	render() {
-		const { movies, selectedMovie, user, register } = this.state;
+		// const { movies, selectedMovie, user, register } = this.state;
+		const { register } = this.state;
+		let { movies } = this.props;
+		let { user } = this.state;
 
 		if (register) return <RegistrationView onRegistrationCancel={() => this.onRegistrationCancel()} />;
 
@@ -137,14 +144,8 @@ export class MainView extends React.Component {
 						exact
 						path="/"
 						render={() => {
-							if (!user)
-								return (
-									<LoginView
-										onLoggedIn={(user) => this.onLoggedIn(user)}
-										// onRegistrationClick={() => this.onRegistration()}
-									/>
-								);
-							return movies.map((m) => <MovieCard key={m._id} movie={m} />);
+							if (!user) return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
+							return <MoviesList movies={movies} />;
 						}}
 					/>
 					<Route path="/register" render={() => <RegistrationView />} />
@@ -177,11 +178,13 @@ export class MainView extends React.Component {
 						return <UpdateProfile />;
 					}}
 				/>
-
-				{/* <Button size="lg" variant="primary" type="button" onClick={this.onLogOut}>
-					Log Out
-				</Button> */}
 			</Router>
 		);
 	}
 }
+
+let mapStateToProps = (state) => {
+	return { movies: state.movies };
+};
+
+export default connect(mapStateToProps, { setMovies })(MainView);
