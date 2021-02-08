@@ -33,7 +33,7 @@ export function LoginView(props) {
 		<Form>
 			<h3>Please Login</h3>
 			<Form.Group>
-				<Form.Label style={{ color: 'white' }}>Username</Form.Label>
+				<Form.Label style={{ color: 'steelblue' }}>Username</Form.Label>
 				<Form.Control
 					autoComplete="true"
 					type="text"
@@ -44,7 +44,7 @@ export function LoginView(props) {
 			</Form.Group>
 
 			<Form.Group>
-				<Form.Label style={{ color: 'white' }}>Password</Form.Label>
+				<Form.Label style={{ color: 'steelblue' }}>Password</Form.Label>
 				<Form.Control
 					autoComplete="true"
 					type="password"
