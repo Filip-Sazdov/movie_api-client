@@ -35,6 +35,7 @@ export function LoginView(props) {
 			<Form.Group>
 				<Form.Label>Username</Form.Label>
 				<Form.Control
+					autoComplete="true"
 					type="text"
 					placeholder="Enter username"
 					value={username}
@@ -45,6 +46,7 @@ export function LoginView(props) {
 			<Form.Group>
 				<Form.Label>Password</Form.Label>
 				<Form.Control
+					autoComplete="true"
 					type="password"
 					placeholder="Password"
 					value={password}
