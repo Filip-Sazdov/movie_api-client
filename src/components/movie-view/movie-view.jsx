@@ -4,14 +4,12 @@ import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
-// import { useHistory } from 'react-router-dom';
-
 export class MovieView extends React.Component {
-	constructor() {
-		super();
+	// constructor() {
+	// 	super();
 
-		this.state = {};
-	}
+	// 	this.state = {};
+	// }
 
 	addFavorite(movie) {
 		let token = localStorage.getItem('token');
@@ -32,7 +30,6 @@ export class MovieView extends React.Component {
 
 	render() {
 		const { movie } = this.props;
-		// let history = useHistory();
 
 		if (!movie) return null;
 
