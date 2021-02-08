@@ -7,7 +7,6 @@ import { About } from '../shared-components/about/about';
 
 import { setMovies, setUser, setToken, setFavoriteMovies } from '../../actions/actions';
 
-import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
@@ -85,19 +84,9 @@ export class MainView extends React.Component {
 		// this.setState({ user: null });
 		this.props.setUser(null);
 	}
-	onRegistration() {
-		this.setState({ register: true });
-	}
-
-	onRegistrationCancel() {
-		this.setState({ register: false });
-	}
 
 	render() {
-		// const { register } = this.state;
 		const { user, movies } = this.props;
-
-		// if (register) return <RegistrationView onRegistrationCancel={() => this.onRegistrationCancel()} />;
 
 		// Before the movies have been loaded
 		if (!movies) return <div className="main-view" />;
