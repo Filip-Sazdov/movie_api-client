@@ -87,6 +87,7 @@ export class MainView extends React.Component {
 
 	render() {
 		const { user, movies } = this.props;
+		// , favoriteMovies
 
 		// Before the movies have been loaded
 		if (!movies) return <div className="main-view" />;
@@ -162,7 +163,13 @@ export class MainView extends React.Component {
 				<Route path="/about" render={() => <About />} />
 				<Route
 					path="/users/:userId"
-					render={() => <ProfileView movies={movies} user={user} favoriteMovies={this.props.favoriteMovies} />}
+					render={() => (
+						<ProfileView
+							movies={movies}
+							user={user}
+							// favoriteMovies={favoriteMovies}
+						/>
+					)}
 				/>
 
 				<Route

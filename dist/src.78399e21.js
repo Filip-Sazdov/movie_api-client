@@ -53405,17 +53405,17 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(MovieView);
 
   function MovieView() {
-    var _this;
-
     _classCallCheck(this, MovieView);
 
-    _this = _super.call(this);
-    _this.state = {};
-    return _this;
+    return _super.apply(this, arguments);
   }
 
   _createClass(MovieView, [{
     key: "addFavorite",
+    // constructor() {
+    // 	super();
+    // 	this.state = {};
+    // }
     value: function addFavorite(movie) {
       var token = localStorage.getItem('token');
       var user = localStorage.getItem('user');
@@ -53435,10 +53435,9 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this = this;
 
-      var movie = this.props.movie; // let history = useHistory();
-
+      var movie = this.props.movie;
       if (!movie) return null;
       return _react.default.createElement("div", {
         className: "movie-view"
@@ -53485,7 +53484,7 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
         variant: "primary",
         size: "sm",
         onClick: function onClick() {
-          return _this2.addFavorite(movie);
+          return _this.addFavorite(movie);
         }
       }, "Add to Favorites"));
     }
@@ -54118,7 +54117,7 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
       email: '',
       dob: '',
       favoriteMovies: [],
-      movies: ''
+      movies: []
     };
     return _this;
   }
@@ -54151,9 +54150,10 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
           username: response.data.Username,
           password: response.data.Password,
           email: response.data.Email,
-          dob: _this2.formatDate(response.data.Birthday),
-          favoriteMovies: response.data.FavoriteMovies
+          dob: _this2.formatDate(response.data.Birthday)
         });
+
+        _this2.props.setFavoriteMovies(response.data.FavoriteMovies);
       });
     }
   }, {
@@ -54199,10 +54199,10 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this4 = this;
 
-      var _this$props = this.props,
-          movies = _this$props.movies,
-          user = _this$props.user,
-          favoriteMovies = _this$props.favoriteMovies;
+      var _this$state = this.state,
+          movies = _this$state.movies,
+          user = _this$state.user,
+          favoriteMovies = _this$state.favoriteMovies;
       var favoriteMovieList = movies.filter(function (movie) {
         return favoriteMovies.includes(movie._id);
       });
@@ -54827,7 +54827,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
       var _this$props = this.props,
           user = _this$props.user,
-          movies = _this$props.movies; // Before the movies have been loaded
+          movies = _this$props.movies; // , favoriteMovies
+      // Before the movies have been loaded
 
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
@@ -54938,8 +54939,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         render: function render() {
           return _react.default.createElement(_profileView.ProfileView, {
             movies: movies,
-            user: user,
-            favoriteMovies: _this2.props.favoriteMovies
+            user: user // favoriteMovies={favoriteMovies}
+
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
