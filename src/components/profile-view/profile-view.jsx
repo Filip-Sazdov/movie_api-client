@@ -27,7 +27,7 @@ export class ProfileView extends React.Component {
 			email: '',
 			dob: '',
 			favoriteMovies: [],
-			movies: '',
+			movies: [],
 		};
 	}
 
@@ -53,8 +53,8 @@ export class ProfileView extends React.Component {
 					password: response.data.Password,
 					email: response.data.Email,
 					dob: this.formatDate(response.data.Birthday),
-					favoriteMovies: response.data.FavoriteMovies,
 				});
+				this.props.setFavoriteMovies(response.data.FavoriteMovies);
 			});
 	}
 
@@ -91,7 +91,7 @@ export class ProfileView extends React.Component {
 	}
 
 	render() {
-		const { movies, user, favoriteMovies } = this.props;
+		const { movies, user, favoriteMovies } = this.state;
 		const favoriteMovieList = movies.filter((movie) => {
 			return favoriteMovies.includes(movie._id);
 		});
