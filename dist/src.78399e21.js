@@ -53564,7 +53564,11 @@ function LoginView(props) {
     });
   };
 
-  return _react.default.createElement(_Form.default, null, _react.default.createElement("h3", null, "Please Login"), _react.default.createElement(_Form.default.Group, null, _react.default.createElement(_Form.default.Label, null, "Username"), _react.default.createElement(_Form.default.Control, {
+  return _react.default.createElement(_Form.default, null, _react.default.createElement("h3", null, "Please Login"), _react.default.createElement(_Form.default.Group, null, _react.default.createElement(_Form.default.Label, {
+    style: {
+      color: 'white'
+    }
+  }, "Username"), _react.default.createElement(_Form.default.Control, {
     autoComplete: "true",
     type: "text",
     placeholder: "Enter username",
@@ -53572,7 +53576,11 @@ function LoginView(props) {
     onChange: function onChange(e) {
       return setUsername(e.target.value);
     }
-  })), _react.default.createElement(_Form.default.Group, null, _react.default.createElement(_Form.default.Label, null, "Password"), _react.default.createElement(_Form.default.Control, {
+  })), _react.default.createElement(_Form.default.Group, null, _react.default.createElement(_Form.default.Label, {
+    style: {
+      color: 'white'
+    }
+  }, "Password"), _react.default.createElement(_Form.default.Control, {
     autoComplete: "true",
     type: "password",
     placeholder: "Password",
