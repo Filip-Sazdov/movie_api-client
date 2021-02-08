@@ -22,7 +22,8 @@ function MoviesList(props) {
 	return (
 		<div className="movies-list">
 			<VisibilityFilterInput visibilityFilter={visibilityFilter} />
-			<Row className="justify-content-center">
+			<br />
+			<Row className="justify-content-center mt-2">
 				{filteredMovies.map((m) => (
 					<Col>
 						<MovieCard className="movie-card" key={m._id} movie={m} />
