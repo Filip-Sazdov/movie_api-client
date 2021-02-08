@@ -94,7 +94,7 @@ export class MainView extends React.Component {
 
 		return (
 			<Router>
-				<Navbar sticky="top" expand="lg" className="mb-2 navbar-styles">
+				<Navbar expand="lg" className="mb-2 navbar-styles">
 					<Navbar.Brand className="navbar-brand">
 						<Link to={`/`}>Movies API</Link>
 					</Navbar.Brand>
