@@ -27,12 +27,12 @@ export class MainView extends React.Component {
 	constructor() {
 		super();
 
-		this.state = {
-			movies: [],
-			// selectedMovie: null,
-			user: null,
-			// register: null,
-		};
+		// this.state = {
+		// 	// movies: [],
+		// 	// // selectedMovie: null,
+		// 	// user: null,
+		// 	// register: null,
+		// };
 	}
 
 	getMovies(token) {
@@ -82,7 +82,8 @@ export class MainView extends React.Component {
 	logOut() {
 		localStorage.removeItem('token');
 		localStorage.removeItem('user');
-		this.setState({ user: null });
+		// this.setState({ user: null });
+		this.props.setUser(null);
 	}
 	onRegistration() {
 		this.setState({ register: true });
@@ -93,12 +94,10 @@ export class MainView extends React.Component {
 	}
 
 	render() {
-		// const { movies, selectedMovie, user, register } = this.state;
-		const { register } = this.state;
-		let { movies } = this.props;
-		let { user } = this.state;
+		// const { register } = this.state;
+		const { user, movies } = this.props;
 
-		if (register) return <RegistrationView onRegistrationCancel={() => this.onRegistrationCancel()} />;
+		// if (register) return <RegistrationView onRegistrationCancel={() => this.onRegistrationCancel()} />;
 
 		// Before the movies have been loaded
 		if (!movies) return <div className="main-view" />;

@@ -53655,6 +53655,7 @@ function LoginView(props) {
   };
 
   return _react.default.createElement(_Form.default, null, _react.default.createElement("h3", null, "Please Login"), _react.default.createElement(_Form.default.Group, null, _react.default.createElement(_Form.default.Label, null, "Username"), _react.default.createElement(_Form.default.Control, {
+    autoComplete: "true",
     type: "text",
     placeholder: "Enter username",
     value: username,
@@ -53662,6 +53663,7 @@ function LoginView(props) {
       return setUsername(e.target.value);
     }
   })), _react.default.createElement(_Form.default.Group, null, _react.default.createElement(_Form.default.Label, null, "Password"), _react.default.createElement(_Form.default.Control, {
+    autoComplete: "true",
     type: "password",
     placeholder: "Password",
     value: password,
@@ -54751,24 +54753,20 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(MainView);
 
   function MainView() {
-    var _this;
-
     _classCallCheck(this, MainView);
 
-    _this = _super.call(this);
-    _this.state = {
-      movies: [],
-      // selectedMovie: null,
-      user: null // register: null,
-
-    };
-    return _this;
+    return _super.call(this); // this.state = {
+    // 	// movies: [],
+    // 	// // selectedMovie: null,
+    // 	// user: null,
+    // 	// register: null,
+    // };
   }
 
   _createClass(MainView, [{
     key: "getMovies",
     value: function getMovies(token) {
-      var _this2 = this;
+      var _this = this;
 
       _axios.default.get('https://movie-api-on-heroku.herokuapp.com/movies', {
         headers: {
@@ -54779,7 +54777,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         // this.setState({
         // 	movies: response.data,
         // });
-        _this2.props.setMovies(response.data);
+        _this.props.setMovies(response.data);
       }).catch(function (error) {
         console.log(error);
       });
@@ -54819,10 +54817,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     key: "logOut",
     value: function logOut() {
       localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      this.setState({
-        user: null
-      });
+      localStorage.removeItem('user'); // this.setState({ user: null });
+
+      this.props.setUser(null);
     }
   }, {
     key: "onRegistration",
@@ -54841,17 +54838,13 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
-      // const { movies, selectedMovie, user, register } = this.state;
-      var register = this.state.register;
-      var movies = this.props.movies;
-      var user = this.state.user;
-      if (register) return _react.default.createElement(_registrationView.RegistrationView, {
-        onRegistrationCancel: function onRegistrationCancel() {
-          return _this3.onRegistrationCancel();
-        }
-      }); // Before the movies have been loaded
+      // const { register } = this.state;
+      var _this$props = this.props,
+          user = _this$props.user,
+          movies = _this$props.movies; // if (register) return <RegistrationView onRegistrationCancel={() => this.onRegistrationCancel()} />;
+      // Before the movies have been loaded
 
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
@@ -54883,7 +54876,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       }, _react.default.createElement(_Button.default, {
         variant: "link",
         onClick: function onClick() {
-          return _this3.logOut();
+          return _this2.logOut();
         }
       }, "Log out")), _react.default.createElement(_reactRouterDom.Link, {
         to: "/users/".concat(user)
@@ -54905,7 +54898,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         render: function render() {
           if (!user) return _react.default.createElement(_loginView.LoginView, {
             onLoggedIn: function onLoggedIn(user) {
-              return _this3.onLoggedIn(user);
+              return _this2.onLoggedIn(user);
             }
           });
           return _react.default.createElement(_moviesList.default, {
@@ -54963,7 +54956,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           return _react.default.createElement(_profileView.ProfileView, {
             movies: movies,
             user: user,
-            favoriteMovies: _this3.props.favoriteMovies
+            favoriteMovies: _this2.props.favoriteMovies
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -54971,7 +54964,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         render: function render() {
           return _react.default.createElement(_updateProfile.UpdateProfile, {
             user: user,
-            token: _this3.props.token
+            token: _this2.props.token
           });
         }
       }));
@@ -55199,7 +55192,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62019" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52136" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
