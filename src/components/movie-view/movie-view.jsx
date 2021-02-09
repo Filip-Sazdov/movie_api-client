@@ -5,12 +5,6 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
 export class MovieView extends React.Component {
-	// constructor() {
-	// 	super();
-
-	// 	this.state = {};
-	// }
-
 	addFavorite(movie) {
 		let token = localStorage.getItem('token');
 		let user = localStorage.getItem('user');
@@ -22,7 +16,6 @@ export class MovieView extends React.Component {
 			})
 			.then((response) => {
 				console.log(response);
-				// window.open("/", "_self");
 				window.open('/users/' + user, '_self');
 				alert('Added to favorites!');
 			});
