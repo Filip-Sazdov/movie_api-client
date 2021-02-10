@@ -19,43 +19,9 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 export class ProfileView extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			username: '',
-			password: '',
-			email: '',
-			dob: '',
-			favoriteMovies: [],
-			movies: [],
-		};
-	}
-
-	componentDidMount() {
-		let accessToken = localStorage.getItem('token');
-		this.getUser(accessToken);
-	}
-
 	formatDate(date) {
 		if (date) date = date.substring(0, 10);
 		return date;
-	}
-
-	getUser(token) {
-		let url = 'https://movie-api-on-heroku.herokuapp.com/users/' + localStorage.getItem('user');
-		axios
-			.get(url, {
-				headers: { Authorization: `Bearer ${token}` },
-			})
-			.then((response) => {
-				this.setState({
-					username: response.data.Username,
-					password: response.data.Password,
-					email: response.data.Email,
-					dob: this.formatDate(response.data.Birthday),
-				});
-				this.props.setFavoriteMovies(response.data.FavoriteMovies);
-			});
 	}
 
 	removeFavorite(movie) {
@@ -68,7 +34,8 @@ export class ProfileView extends React.Component {
 			})
 			.then((response) => {
 				console.log(response);
-				this.componentDidMount();
+
+				// componentDidMount(); I think I am missing a useHistory hook here to push to
 			});
 	}
 
@@ -91,7 +58,7 @@ export class ProfileView extends React.Component {
 	}
 
 	render() {
-		const { movies, user, favoriteMovies } = this.state;
+		const { movies, user, favoriteMovies } = this.props;
 		const favoriteMovieList = movies.filter((movie) => {
 			return favoriteMovies.includes(movie._id);
 		});
@@ -106,15 +73,15 @@ export class ProfileView extends React.Component {
 								<h1 style={{ textAlign: 'center' }}>Profile Details</h1>
 								<Form.Group controlId="formBasicUsername">
 									<h3>Username: </h3>
-									<Form.Label>{this.props.user}</Form.Label>
+									<Form.Label>{user.Username}</Form.Label>
 								</Form.Group>
 								<Form.Group controlId="formBasicEmail">
 									<h3>Email:</h3>
-									<Form.Label>{this.state.email}</Form.Label>
+									<Form.Label>{user.Email}</Form.Label>
 								</Form.Group>
 								<Form.Group controlId="formBasicDate">
 									<h3>Date of Birth:</h3>
-									<Form.Label>{this.state.dob}</Form.Label>
+									<Form.Label>{this.formatDate(user.Birthday)}</Form.Label>
 								</Form.Group>
 								<Link to={`/update/${this.props.user}`}>
 									<Button variant="outline-dark" type="link" size="sm" block>
@@ -165,9 +132,9 @@ export class ProfileView extends React.Component {
 	}
 }
 
-ProfileView.propTypes = {
-	movies: PropTypes.array.isRequired,
-};
+// ProfileView.propTypes = {
+// 	movies: PropTypes.array.isRequired,
+// };
 
 let mapStateToProps = (state) => {
 	return {
