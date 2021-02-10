@@ -23,31 +23,29 @@ import Navbar from 'react-bootstrap/Navbar';
 import './main-view.scss';
 
 export class MainView extends React.Component {
-	constructor() {
-		super();
-
-		// this.state = {
-		// 	// movies: [],
-		// 	// // selectedMovie: null,
-		// 	// user: null,
-		// 	// register: null,
-		// };
-	}
-
 	getMovies(token) {
 		axios
 			.get('https://movie-api-on-heroku.herokuapp.com/movies', {
 				headers: { Authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
-				// Assign the result to the state
-				// this.setState({
-				// 	movies: response.data,
-				// });
 				this.props.setMovies(response.data);
+				// console.log(response.data); getting movies object, it works
 			})
 			.catch(function (error) {
 				console.log(error);
+			});
+	}
+
+	getUser(token) {
+		let url = 'https://movie-api-on-heroku.herokuapp.com/users/' + localStorage.getItem('user');
+		axios
+			.get(url, {
+				headers: { Authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				this.props.setUser(response.data);
+				this.props.setFavoriteMovies(response.data.FavoriteMovies);
 			});
 	}
 
@@ -55,10 +53,9 @@ export class MainView extends React.Component {
 		let accessToken = localStorage.getItem('token');
 		if (accessToken !== null) {
 			this.props.setUser(localStorage.getItem('user'));
-			// this.setState({
-			// 	user: localStorage.getItem('user'),
-			// });
+
 			this.getMovies(accessToken);
+			this.getUser(accessToken);
 		}
 	}
 
@@ -68,26 +65,21 @@ export class MainView extends React.Component {
 		});
 	}
 	onLoggedIn(authData) {
-		// this.setState({
-		// 	user: authData.user.Username,
-		// });
-		this.props.setUser(authData.user.Username);
-
+		this.props.setUser(authData.user);
 		localStorage.setItem('token', authData.token);
 		localStorage.setItem('user', authData.user.Username);
 		this.getMovies(authData.token);
+		this.getUser(authData.token);
 	}
 
 	logOut() {
 		localStorage.removeItem('token');
 		localStorage.removeItem('user');
-		// this.setState({ user: null });
 		this.props.setUser(null);
 	}
 
 	render() {
-		const { user, movies } = this.props;
-		// , favoriteMovies
+		const { user, movies, favoriteMovies } = this.props;
 
 		// Before the movies have been loaded
 		if (!movies) return <div className="main-view" />;
@@ -163,13 +155,7 @@ export class MainView extends React.Component {
 				<Route path="/about" render={() => <About />} />
 				<Route
 					path="/users/:userId"
-					render={() => (
-						<ProfileView
-							movies={movies}
-							user={user}
-							// favoriteMovies={favoriteMovies}
-						/>
-					)}
+					render={() => <ProfileView movies={movies} user={user} favoriteMovies={favoriteMovies} />}
 				/>
 
 				<Route

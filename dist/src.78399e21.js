@@ -53412,10 +53412,6 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
 
   _createClass(MovieView, [{
     key: "addFavorite",
-    // constructor() {
-    // 	super();
-    // 	this.state = {};
-    // }
     value: function addFavorite(movie) {
       var token = localStorage.getItem('token');
       var user = localStorage.getItem('user');
@@ -53426,8 +53422,6 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
           Authorization: "Bearer ".concat(token)
         }
       }).then(function (response) {
-        console.log(response); // window.open("/", "_self");
-
         window.open('/users/' + user, '_self');
         alert('Added to favorites!');
       });
@@ -54113,62 +54107,21 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
 
   var _super = _createSuper(ProfileView);
 
-  function ProfileView(props) {
-    var _this;
-
+  function ProfileView() {
     _classCallCheck(this, ProfileView);
 
-    _this = _super.call(this, props);
-    _this.state = {
-      username: '',
-      password: '',
-      email: '',
-      dob: '',
-      favoriteMovies: [],
-      movies: []
-    };
-    return _this;
+    return _super.apply(this, arguments);
   }
 
   _createClass(ProfileView, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var accessToken = localStorage.getItem('token');
-      this.getUser(accessToken);
-    }
-  }, {
     key: "formatDate",
     value: function formatDate(date) {
       if (date) date = date.substring(0, 10);
       return date;
     }
   }, {
-    key: "getUser",
-    value: function getUser(token) {
-      var _this2 = this;
-
-      var url = 'https://movie-api-on-heroku.herokuapp.com/users/' + localStorage.getItem('user');
-
-      _axios.default.get(url, {
-        headers: {
-          Authorization: "Bearer ".concat(token)
-        }
-      }).then(function (response) {
-        _this2.setState({
-          username: response.data.Username,
-          password: response.data.Password,
-          email: response.data.Email,
-          dob: _this2.formatDate(response.data.Birthday)
-        });
-
-        _this2.props.setFavoriteMovies(response.data.FavoriteMovies);
-      });
-    }
-  }, {
     key: "removeFavorite",
     value: function removeFavorite(movie) {
-      var _this3 = this;
-
       var token = localStorage.getItem('token');
 
       var url = 'https://movie-api-on-heroku.herokuapp.com/users/' + localStorage.getItem('user') + '/Movies/' + movie._id;
@@ -54178,9 +54131,7 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
           Authorization: "Bearer ".concat(token)
         }
       }).then(function (response) {
-        console.log(response);
-
-        _this3.componentDidMount();
+        console.log(response); // componentDidMount(); I think I am missing a useHistory hook here to push to
       });
     }
   }, {
@@ -54205,12 +54156,12 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this = this;
 
-      var _this$state = this.state,
-          movies = _this$state.movies,
-          user = _this$state.user,
-          favoriteMovies = _this$state.favoriteMovies;
+      var _this$props = this.props,
+          movies = _this$props.movies,
+          user = _this$props.user,
+          favoriteMovies = _this$props.favoriteMovies;
       var favoriteMovieList = movies.filter(function (movie) {
         return favoriteMovies.includes(movie._id);
       });
@@ -54231,11 +54182,11 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
         }
       }, "Profile Details"), _react.default.createElement(_Form.default.Group, {
         controlId: "formBasicUsername"
-      }, _react.default.createElement("h3", null, "Username: "), _react.default.createElement(_Form.default.Label, null, this.props.user)), _react.default.createElement(_Form.default.Group, {
+      }, _react.default.createElement("h3", null, "Username: "), _react.default.createElement(_Form.default.Label, null, user.Username)), _react.default.createElement(_Form.default.Group, {
         controlId: "formBasicEmail"
-      }, _react.default.createElement("h3", null, "Email:"), _react.default.createElement(_Form.default.Label, null, this.state.email)), _react.default.createElement(_Form.default.Group, {
+      }, _react.default.createElement("h3", null, "Email:"), _react.default.createElement(_Form.default.Label, null, user.Email)), _react.default.createElement(_Form.default.Group, {
         controlId: "formBasicDate"
-      }, _react.default.createElement("h3", null, "Date of Birth:"), _react.default.createElement(_Form.default.Label, null, this.state.dob)), _react.default.createElement(_reactRouterDom.Link, {
+      }, _react.default.createElement("h3", null, "Date of Birth:"), _react.default.createElement(_Form.default.Label, null, this.formatDate(user.Birthday))), _react.default.createElement(_reactRouterDom.Link, {
         to: "/update/".concat(this.props.user)
       }, _react.default.createElement(_Button.default, {
         variant: "outline-dark",
@@ -54254,7 +54205,7 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
         size: "sm",
         block: true,
         onClick: function onClick() {
-          return _this4.handleDelete();
+          return _this.handleDelete();
         }
       }, "Delete Account"))), _react.default.createElement(_Col.default, null, _react.default.createElement("div", {
         className: "favoriteMovies",
@@ -54273,7 +54224,7 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
           to: "/movies/".concat(movie._id)
         }, _react.default.createElement(_Card.default.Title, null, movie.Title)))), _react.default.createElement(_Button.default, {
           onClick: function onClick() {
-            return _this4.removeFavorite(movie);
+            return _this.removeFavorite(movie);
           }
         }, "Remove"));
       }))))));
@@ -54281,12 +54232,12 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
   }]);
 
   return ProfileView;
-}(_react.default.Component);
+}(_react.default.Component); // ProfileView.propTypes = {
+// 	movies: PropTypes.array.isRequired,
+// };
+
 
 exports.ProfileView = ProfileView;
-ProfileView.propTypes = {
-  movies: _propTypes.default.array.isRequired
-};
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -54676,9 +54627,10 @@ function MoviesList(props) {
   }), _react.default.createElement("br", null), _react.default.createElement(_reactBootstrap.Row, {
     className: "justify-content-center mt-2"
   }, filteredMovies.map(function (m) {
-    return _react.default.createElement(_reactBootstrap.Col, null, _react.default.createElement(_movieCard.MovieCard, {
+    return _react.default.createElement(_reactBootstrap.Col, {
+      key: m._id
+    }, _react.default.createElement(_movieCard.MovieCard, {
       className: "movie-card",
-      key: m._id,
       movie: m
     }));
   })));
@@ -54775,12 +54727,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   function MainView() {
     _classCallCheck(this, MainView);
 
-    return _super.call(this); // this.state = {
-    // 	// movies: [],
-    // 	// // selectedMovie: null,
-    // 	// user: null,
-    // 	// register: null,
-    // };
+    return _super.apply(this, arguments);
   }
 
   _createClass(MainView, [{
@@ -54793,13 +54740,27 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           Authorization: "Bearer ".concat(token)
         }
       }).then(function (response) {
-        // Assign the result to the state
-        // this.setState({
-        // 	movies: response.data,
-        // });
-        _this.props.setMovies(response.data);
+        _this.props.setMovies(response.data); // console.log(response.data); getting movies object, it works
+
       }).catch(function (error) {
         console.log(error);
+      });
+    }
+  }, {
+    key: "getUser",
+    value: function getUser(token) {
+      var _this2 = this;
+
+      var url = 'https://movie-api-on-heroku.herokuapp.com/users/' + localStorage.getItem('user');
+
+      _axios.default.get(url, {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).then(function (response) {
+        _this2.props.setUser(response.data);
+
+        _this2.props.setFavoriteMovies(response.data.FavoriteMovies);
       });
     }
   }, {
@@ -54808,11 +54769,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       var accessToken = localStorage.getItem('token');
 
       if (accessToken !== null) {
-        this.props.setUser(localStorage.getItem('user')); // this.setState({
-        // 	user: localStorage.getItem('user'),
-        // });
-
+        this.props.setUser(localStorage.getItem('user'));
         this.getMovies(accessToken);
+        this.getUser(accessToken);
       }
     }
   }, {
@@ -54825,31 +54784,28 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onLoggedIn",
     value: function onLoggedIn(authData) {
-      // this.setState({
-      // 	user: authData.user.Username,
-      // });
-      this.props.setUser(authData.user.Username);
+      this.props.setUser(authData.user);
       localStorage.setItem('token', authData.token);
       localStorage.setItem('user', authData.user.Username);
       this.getMovies(authData.token);
+      this.getUser(authData.token);
     }
   }, {
     key: "logOut",
     value: function logOut() {
       localStorage.removeItem('token');
-      localStorage.removeItem('user'); // this.setState({ user: null });
-
+      localStorage.removeItem('user');
       this.props.setUser(null);
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _this$props = this.props,
           user = _this$props.user,
-          movies = _this$props.movies; // , favoriteMovies
-      // Before the movies have been loaded
+          movies = _this$props.movies,
+          favoriteMovies = _this$props.favoriteMovies; // Before the movies have been loaded
 
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
@@ -54880,7 +54836,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       }, _react.default.createElement(_Button.default, {
         variant: "link",
         onClick: function onClick() {
-          return _this2.logOut();
+          return _this3.logOut();
         }
       }, "Log out")), _react.default.createElement(_reactRouterDom.Link, {
         to: "/users/".concat(user)
@@ -54902,7 +54858,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         render: function render() {
           if (!user) return _react.default.createElement(_loginView.LoginView, {
             onLoggedIn: function onLoggedIn(user) {
-              return _this2.onLoggedIn(user);
+              return _this3.onLoggedIn(user);
             }
           });
           return _react.default.createElement(_moviesList.default, {
@@ -54959,8 +54915,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         render: function render() {
           return _react.default.createElement(_profileView.ProfileView, {
             movies: movies,
-            user: user // favoriteMovies={favoriteMovies}
-
+            user: user,
+            favoriteMovies: favoriteMovies
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -54968,7 +54924,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         render: function render() {
           return _react.default.createElement(_updateProfile.UpdateProfile, {
             user: user,
-            token: _this2.props.token
+            token: _this3.props.token
           });
         }
       }));
@@ -55196,7 +55152,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52136" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62599" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
