@@ -32,10 +32,9 @@ export class ProfileView extends React.Component {
 			.delete(url, {
 				headers: { Authorization: `Bearer ${token}` },
 			})
-			.then((response) => {
-				console.log(response);
-
-				// componentDidMount(); I think I am missing a useHistory hook here to push to
+			.then(() => {
+				alert(movie + ' has been removed');
+				window.location.pathname = '/';
 			});
 	}
 

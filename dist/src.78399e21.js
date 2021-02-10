@@ -54130,8 +54130,9 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
         headers: {
           Authorization: "Bearer ".concat(token)
         }
-      }).then(function (response) {
-        console.log(response); // componentDidMount(); I think I am missing a useHistory hook here to push to
+      }).then(function () {
+        alert(movie + ' has been removed');
+        window.location.pathname = '/';
       });
     }
   }, {
