@@ -33,7 +33,7 @@ export class ProfileView extends React.Component {
 				headers: { Authorization: `Bearer ${token}` },
 			})
 			.then(() => {
-				alert(movie + ' has been removed');
+				alert(movie.Title + ' has been removed');
 				window.location.pathname = '/';
 			});
 	}
@@ -112,7 +112,7 @@ export class ProfileView extends React.Component {
 								{favoriteMovieList.map((movie) => {
 									return (
 										<div key={movie._id}>
-											<Card>
+											<Card style={{ width: '20em', margin: '1em auto' }}>
 												<Card.Img variant="top" src={movie.ImagePath} />
 												<Card.Body>
 													<Link to={`/movies/${movie._id}`}>
