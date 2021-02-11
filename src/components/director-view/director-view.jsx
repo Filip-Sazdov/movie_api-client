@@ -25,7 +25,7 @@ export class DirectorView extends React.Component {
 				<Row>
 					<Col className="col-2" />
 					<Col className="director-view container-fluid align-items-center col">
-						<img className="director-poster" src="https://via.placeholder.com/250" />
+						<img className="director-poster" src="https://via.placeholder.com/250" alt="director poster" />
 						<div className="director-title info-section">
 							<span className="label">Name: </span>
 							<span className="value">{director.Director.Name}</span>
