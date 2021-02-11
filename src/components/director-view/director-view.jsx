@@ -21,36 +21,38 @@ export class DirectorView extends React.Component {
 		if (!director) return null;
 
 		return (
-			<Container className="wrapper container-fluid">
+			<Container className="director-container wrapper container-fluid">
 				<Row>
-					<Col className="col-3" />
-					<Col className="director-view container-fluid align-items-center col-6">
-						<img className="director-poster" src="https://via.placeholder.com/150" />
-						<div className="director-title">
+					<Col className="col-2" />
+					<Col className="director-view container-fluid align-items-center col">
+						<img className="director-poster" src="https://via.placeholder.com/250" />
+						<div className="director-title info-section">
 							<span className="label">Name: </span>
 							<span className="value">{director.Director.Name}</span>
 						</div>
-						<div className="director-bio">
+						<div className="director-bio info-section">
 							<span className="label">Bio: </span>
 							<span className="value">{director.Director.Bio}</span>
 						</div>
-						<div className="director-birth">
+						<div className="director-birth info-section">
 							<span className="label">Born: </span>
 							<span className="value">{director.Director.Birth}</span>
 						</div>
-						<div className="director-death">
+						<div className="director-death info-section">
 							<span className="label">Died: </span>
 							<span className="value">{director.Director.Death}</span>
 						</div>
 						<Link to={`/`}>
-							<Button variant="link">Return</Button>
+							<Button className="pl-0" variant="link">
+								Return
+							</Button>
 						</Link>
 					</Col>
-					<Col className="col-3" />
+					<Col className="col-2" />
 				</Row>
 				<Container>
-					<h4 className="mt-4">Some {director.Director.Name} movies</h4>
-					<div className="d-flex row mt-3 ml-1">
+					<h4 className="py-4 mb-0">Other {director.Director.Name} Movies</h4>
+					<div className="d-flex row mt-3 mx-1">
 						{movies.map((movie) => {
 							if (movie.Director.Name === director.Director.Name) {
 								return (
