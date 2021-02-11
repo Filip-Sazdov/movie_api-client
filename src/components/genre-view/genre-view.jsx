@@ -7,6 +7,8 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 
+import './genre-view.scss';
+
 export class GenreView extends React.Component {
 	constructor() {
 		super();
@@ -20,28 +22,34 @@ export class GenreView extends React.Component {
 		if (!genre) return null;
 
 		return (
-			<Container className="wrapper container-fluid">
+			<Container className="genre-container wrapper container-fluid">
 				<Row>
-					<Col className="col-3" />
-					<Col className="genre-view container-fluid align-items-center col-6">
-						<img className="genre-poster " src="https://via.placeholder.com/150" />
+					<Col className="col-2" />
+					<Col className="genre-view container-fluid align-items-center col">
+						<img
+							className="genre-poster "
+							src="https://via.placeholder.com/250"
+							alt={genre.Genre.Name + ' genre poster'}
+						/>
 						<div className="genre-title ">
-							{/* <span className="label">Name: </span> */}
+							<span className="label">Name: </span>
 							<span className="value">{genre.Genre.Name}</span>
 						</div>
 						<div className="genre-description ">
-							{/* <span className="label">Description: </span> */}
+							<span className="label">Description: </span>
 							<span className="value">{genre.Genre.Description}</span>
 						</div>
 						<Link to={`/`}>
-							<Button variant="link">Return</Button>
+							<Button className="pl-0" variant="link">
+								Return
+							</Button>
 						</Link>
 					</Col>
-					<Col className="col-3" />
+					<Col className="col-2" />
 				</Row>
 				<Container>
-					<h4 className="mt-4">Some {genre.Genre.Name} movies</h4>
-					<div className="d-flex row mt-3 ml-2">
+					<h4 className="py-4 mb-0">Other Movies With The Genre Of {genre.Genre.Name}</h4>
+					<div className="d-flex row mt-3 mx-1">
 						{movies.map((movie) => {
 							if (movie.Genre.Name === genre.Genre.Name) {
 								return (

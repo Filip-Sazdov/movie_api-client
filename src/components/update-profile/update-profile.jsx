@@ -81,9 +81,9 @@ export function UpdateProfile(props) {
 	};
 
 	return (
-		<Container>
-			<h1>Update your account</h1>
-			<Form className="registration-form">
+		<Container className="py-3" style={{ color: 'rgb(151, 145, 145)' }}>
+			<h1>Update Your Account</h1>
+			<Form className="registration-form py-3">
 				<Form.Group controlId="formBasicUsername">
 					<Form.Label>Username:</Form.Label>
 					<Form.Control
