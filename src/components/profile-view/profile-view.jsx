@@ -69,7 +69,9 @@ export class ProfileView extends React.Component {
 					<Row>
 						<Col>
 							<Form style={{ width: '24rem', float: 'left' }}>
-								<h1 style={{ textAlign: 'center' }}>Profile Details</h1>
+								<h1 className="pb-3" style={{ textAlign: 'center' }}>
+									Profile Details
+								</h1>
 								<Form.Group controlId="formBasicUsername">
 									<h3>Username: </h3>
 									<Form.Label>{user.Username}</Form.Label>
@@ -101,12 +103,12 @@ export class ProfileView extends React.Component {
 							<div
 								className="favoriteMovies"
 								style={{
-									float: 'right',
+									margin: '0 auto',
 									textAlign: 'center',
 									width: '24rem',
 								}}
 							>
-								<h1>Favorite Movies</h1>
+								<h1 className="pb-3">Favorite Movies</h1>
 								{favoriteMovieList.map((movie) => {
 									return (
 										<div key={movie._id}>
