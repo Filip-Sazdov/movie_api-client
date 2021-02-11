@@ -28,35 +28,40 @@ export class MovieView extends React.Component {
 		return (
 			<div className="movie-view">
 				<img className="movie-poster" src={movie.ImagePath} />
-				<div className="movie-title">
+				<div className="movie-title movie-info-section">
 					<span className="label">Title: </span>
 					<span className="value">{movie.Title}</span>
 				</div>
-				<div className="movie-description">
+				<div className="movie-description movie-info-section">
 					<span className="label">Description: </span>
 					<span className="value">{movie.Description}</span>
 				</div>
 
-				<div className="movie-genre">
+				<div className="movie-genre movie-info-section">
 					<span className="label">Genre: </span>
 					<span className="value">{movie.Genre.Name}</span>
 				</div>
-				<div className="movie-director">
+				<div className="movie-director movie-info-section">
 					<span className="label">Director: </span>
 					<span className="value">{movie.Director.Name}</span>
 				</div>
-
 				<Link to={`/directors/${movie.Director.Name}`}>
-					<Button variant="link">Director</Button>
+					<Button className="link-section" variant="link">
+						Director
+					</Button>
 				</Link>
 
 				<Link to={`/genres/${movie.Genre.Name}`}>
-					<Button variant="link">Genre</Button>
+					<Button className="link-section" variant="link">
+						Genre
+					</Button>
 				</Link>
 				<Link to={`/`}>
-					<Button variant="link">Return</Button>
+					<Button className="link-section" variant="link">
+						Return
+					</Button>
 				</Link>
-				<Button variant="primary" size="sm" onClick={() => this.addFavorite(movie)}>
+				<Button className="link-section" variant="primary" size="sm" onClick={() => this.addFavorite(movie)}>
 					Add to Favorites
 				</Button>
 			</div>
