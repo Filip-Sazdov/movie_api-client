@@ -86,7 +86,7 @@ export class MainView extends React.Component {
 
 		return (
 			<Router>
-				<Navbar expand="lg" className="mb-2 navbar-styles">
+				<Navbar expand="lg" className="py-3 navbar-styles">
 					<Navbar.Brand className="navbar-brand">
 						<Link to={`/`}>Movies API</Link>
 					</Navbar.Brand>
@@ -102,7 +102,7 @@ export class MainView extends React.Component {
 								</Link>
 							</ul>
 						) : (
-							<ul>
+							<ul className="m-0 p-0">
 								<Link to={`/`}>
 									<Button variant="link" onClick={() => this.logOut()}>
 										Log out

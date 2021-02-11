@@ -1,3 +1,62 @@
+.movie-view {
+  color: #979191;
+  margin-top: 2em;
+}
+
+.movie-poster {
+  max-width: 300px;
+  float: left;
+  margin-right: 2em;
+}
+
+.movie-title {
+  padding-top: 2em;
+}
+
+.movie-info-section {
+  margin-bottom: 1em;
+}
+
+.link-section {
+  padding-left: 0;
+}
+.director-container {
+  color: #979191;
+}
+
+.director-poster {
+  margin: 2em 2em 2em 0;
+  float: left;
+}
+
+.director-title {
+  margin-top: 2em;
+}
+
+.info-section {
+  margin-bottom: 1em;
+}
+.genre-container {
+  color: #979191;
+}
+
+.genre-poster {
+  margin: 2em 2em 2em 0;
+  float: left;
+}
+
+.genre-title {
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+.genre-description {
+  margin-bottom: 1em;
+}
+.userProfile {
+  color: #979191;
+  margin-top: 2em;
+}
 .main-view {
   background-color: #212529;
 }
