@@ -12,13 +12,19 @@ export class MovieCard extends React.Component {
 		const { movie } = this.props;
 
 		return (
-			<Card style={{ width: '16em', margin: '0 auto' }}>
+			<Card style={{ width: '16em', margin: '1em auto' }}>
 				<Card.Img variant="top" src={movie.ImagePath} />
 				<Card.Body>
-					<Card.Title>{movie.Title}</Card.Title>
-					<Card.Text>{movie.Description}</Card.Text>
+					<Card.Title style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+						{movie.Title}
+					</Card.Title>
+					<Card.Text style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+						{movie.Description}
+					</Card.Text>
 					<Link to={`/movies/${movie._id}`}>
-						<Button variant="link">Open</Button>
+						<Button className="pl-0" variant="link">
+							Open
+						</Button>
 					</Link>
 				</Card.Body>
 			</Card>
