@@ -16,7 +16,6 @@ import { ProfileView } from '../profile-view/profile-view';
 import { UpdateProfile } from '../update-profile/update-profile';
 import MoviesList from '../movies-list/movies-list';
 
-import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
 
@@ -93,10 +92,10 @@ export class MainView extends React.Component {
 					<Navbar.Toggle aria-controls="basic-navbar-nav" className="bg-light" />
 					<Navbar.Collapse className="justify-content-end navbar-light" id="basic-navbar-nav">
 						{!user ? (
-							<ul>
-								<Link to={`/`}>
-									<Button variant="link">login</Button>
-								</Link>
+							<ul className="m-0 p-0">
+								{/* <Link to={`/`}>
+									<Button variant="link">Login</Button>
+								</Link> */}
 								<Link to={`/register`}>
 									<Button variant="link">Register</Button>
 								</Link>
@@ -108,7 +107,7 @@ export class MainView extends React.Component {
 										Log out
 									</Button>
 								</Link>
-								<Link to={`/users/${user}`}>
+								<Link to={`/users/${user.Username}`}>
 									<Button variant="link">Account</Button>
 								</Link>
 								<Link to={`/`}>

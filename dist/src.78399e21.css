@@ -20,6 +20,16 @@
 .link-section {
   padding-left: 0;
 }
+.login-container {
+  color: #979191;
+  max-width: 400px;
+  margin: 2em auto;
+}
+.registration-container {
+  color: #979191;
+  max-width: 400px;
+  margin: 2em auto;
+}
 .director-container {
   color: #979191;
 }
