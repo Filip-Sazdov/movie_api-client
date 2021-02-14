@@ -30,10 +30,10 @@ export function LoginView(props) {
 	};
 
 	return (
-		<Form>
-			<h3>Please Login</h3>
+		<Form className="login-container">
+			<h3 className="py-4">Please Login</h3>
 			<Form.Group>
-				<Form.Label style={{ color: 'steelblue' }}>Username</Form.Label>
+				<Form.Label>Username</Form.Label>
 				<Form.Control
 					autoComplete="true"
 					type="text"
@@ -44,7 +44,7 @@ export function LoginView(props) {
 			</Form.Group>
 
 			<Form.Group>
-				<Form.Label style={{ color: 'steelblue' }}>Password</Form.Label>
+				<Form.Label>Password</Form.Label>
 				<Form.Control
 					autoComplete="true"
 					type="password"
@@ -53,8 +53,8 @@ export function LoginView(props) {
 					onChange={(e) => setPassword(e.target.value)}
 				/>
 			</Form.Group>
-			<Form.Group>
-				<Button size="lg" block variant="primary" type="button" onClick={handleSubmit}>
+			<Form.Group className="py-4">
+				<Button className="mb-2" size="lg" block variant="primary" type="button" onClick={handleSubmit}>
 					Submit
 				</Button>
 

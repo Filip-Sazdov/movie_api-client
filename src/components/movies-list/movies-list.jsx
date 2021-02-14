@@ -20,9 +20,10 @@ function MoviesList(props) {
 	if (!movies) return <div className="main-view" />;
 
 	return (
-		<div className="movies-list">
+		<div className="my-4 movies-list">
 			<VisibilityFilterInput visibilityFilter={visibilityFilter} />
 			<br />
+
 			<Row className="justify-content-center mt-2">
 				{filteredMovies.map((m) => (
 					<Col key={m._id}>
